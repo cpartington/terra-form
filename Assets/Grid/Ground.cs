@@ -18,28 +18,31 @@ public class Ground : MonoBehaviour
     {
         this.meshRenderer = GetComponent<MeshRenderer>();
         this.cell = TerrainGrid.Instance.GetTerrainCell(transform.position);
+        float[] Percentiles = TerrainComputer.Instance.TerrainTypePercentiles;
 
-        switch (cell.y)
+        transform.localScale = new Vector3(1, cell.y, 1);
+
+        switch (cell.type)
         {
-            case GridConstants.DeepWater:
+            case TerrainType.DeepWater:
                 meshRenderer.material = deepWater;
-                transform.localScale = new Vector3(1, 0.5f, 1);
+                //transform.localScale = new Vector3(1, 0.5f, 1);
                 break;
-            case GridConstants.ShallowWater:
+            case TerrainType.ShallowWater:
                 meshRenderer.material = shallowWater;
-                transform.localScale = new Vector3(1, 1, 1);
+                //transform.localScale = new Vector3(1, 1, 1);
                 break;
-            case GridConstants.LowGround:
+            case TerrainType.LowGround:
                 meshRenderer.material = lowGround;
-                transform.localScale = new Vector3(1, 1.5f, 1);
+                //transform.localScale = new Vector3(1, 1.5f, 1);
                 break;
-            case GridConstants.MidGround:
+            case TerrainType.MidGround:
                 meshRenderer.material = midGround;
-                transform.localScale = new Vector3(1, 2, 1);
+                //transform.localScale = new Vector3(1, 2, 1);
                 break;
-            case GridConstants.HighGround:
+            case TerrainType.HighGround:
                 meshRenderer.material = highGround;
-                transform.localScale = new Vector3(1, 2.5f, 1);
+                //transform.localScale = new Vector3(1, 2.5f, 1);
                 break;
             default:
                 Debug.Log("You messed up");

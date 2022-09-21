@@ -8,16 +8,29 @@ public class TerrainCell
     public int y;
     public int z;
 
+    public TerrainType type;
+
     public TerrainCell(int x, int z, float noiseValue)
     {
         this.x = x;
         this.z = z;
-
-        for (int i = 0; i < GridWeights.Percentiles.Length; i++)
+        
+        float[] LevelPercentiles = TerrainComputer.Instance.TerrainLevelPercentiles;
+        for (int i = 0; i < LevelPercentiles.Length; i++)
         {
-            if (noiseValue < GridWeights.Percentiles[i])
+            if (noiseValue < LevelPercentiles[i])
             {
                 this.y = i;
+                break;
+            }
+        }
+
+        float[] TypePercentiles = TerrainComputer.Instance.TerrainTypePercentiles;
+        for (int i = 0; i < TypePercentiles.Length; i++)
+        {
+            if (noiseValue < TypePercentiles[i])
+            {
+                this.type = (TerrainType)i;
                 break;
             }
         }
