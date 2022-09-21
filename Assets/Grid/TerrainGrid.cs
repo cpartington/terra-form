@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 public class TerrainGrid : MonoBehaviour
 {
@@ -32,11 +33,18 @@ public class TerrainGrid : MonoBehaviour
         Debug.Log(this.originPosition);
 
         this.gridArray = new TerrainCell[xLength, zLength];
+        (float xOffset, float yOffset) = (Random.Range(-10000f, 10000f), Random.Range(-10000f, 10000f));
         for (int x = 0; x < gridArray.GetLength(0); x++)
         {
             for (int z = 0; z < gridArray.GetLength(1); z++)
             {
-                gridArray[x, z] = new TerrainCell(this, x, z);
+                // Get height value
+                float noiseValue = Mathf.PerlinNoise(x * GridConstants.GridNoiseScale + xOffset, z * GridConstants.GridNoiseScale + yOffset);
+
+                // Create cell
+                gridArray[x, z] = new TerrainCell(x, z, noiseValue);
+
+                // Create prefab
                 Vector3 location = GetWorldPosition(x, z);
                 location.x += cellSize / 2;
                 location.z += cellSize / 2;
@@ -66,5 +74,11 @@ public class TerrainGrid : MonoBehaviour
     public Vector3 GetWorldPosition(int x, int z)
     {
         return new Vector3(x, 0, z) * cellSize + originPosition;
+    }
+
+    public TerrainCell GetTerrainCell(Vector3 worldPosition)
+    {
+        Vector3 gridVector = (worldPosition - originPosition) / cellSize;
+        return this.gridArray[(int)gridVector.x, (int)gridVector.z];
     }
 }

@@ -11,14 +11,15 @@ public class Ground : MonoBehaviour
     public Material highGround;
     
     private MeshRenderer meshRenderer;
+    private TerrainCell cell;
 
     // Start is called before the first frame update
     void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        this.meshRenderer = GetComponent<MeshRenderer>();
+        this.cell = TerrainGrid.Instance.GetTerrainCell(transform.position);
 
-        int groundType = Random.Range(0, 5);
-        switch (groundType)
+        switch (cell.y)
         {
             case GridConstants.DeepWater:
                 meshRenderer.material = deepWater;

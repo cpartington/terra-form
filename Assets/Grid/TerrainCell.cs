@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class TerrainCell
 {
-    private int x;
-    private int z;
+    public int x;
+    public int y;
+    public int z;
 
-    private TerrainGrid grid;
-
-    public TerrainCell(TerrainGrid grid, int x, int z)
+    public TerrainCell(int x, int z, float noiseValue)
     {
-        this.grid = grid;
-
         this.x = x;
         this.z = z;
+
+        for (int i = 0; i < GridWeights.Percentiles.Length; i++)
+        {
+            if (noiseValue < GridWeights.Percentiles[i])
+            {
+                this.y = i;
+                break;
+            }
+        }
     }
 }
