@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 1859679397}
   - component: {fileID: 1859679396}
   m_Layer: 0
-  m_Name: TerrainGridSystem
+  m_Name: TerrainGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -449,7 +449,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1859679395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1d59eaf41b660b429e35aa6633ced74, type: 3}
+  m_Script: {fileID: 11500000, guid: 75510f6272918f547ae9435182e68b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   groundPrefab: {fileID: 7288883915421138169, guid: 467b7b2adad961e488e462de72098945,

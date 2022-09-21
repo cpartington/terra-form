@@ -1,19 +1,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class TerrainGrid : MonoBehaviour
 {
-    public int xLength { get; }
-    public int zLength { get; }
+    public static TerrainGrid Instance { get; private set; }
+
+    public GameObject groundPrefab;
+
+    public int xLength { get; private set; }
+    public int zLength { get; private set; }
+
     private int cellSize;
     private Vector3 originPosition;
-
     private TerrainCell[,] gridArray;
 
-    public TerrainGrid()
+    private void Awake()
     {
+        Instance = this;
+
+        Stopwatch stopwatch = new Stopwatch();
+        stopwatch.Start();
+
         this.xLength = GridConstants.GridXLength;
         this.zLength = GridConstants.GridZLength;
         this.cellSize = GridConstants.GridCellSize;
@@ -26,10 +37,17 @@ public class TerrainGrid : MonoBehaviour
             for (int z = 0; z < gridArray.GetLength(1); z++)
             {
                 gridArray[x, z] = new TerrainCell(this, x, z);
+                Vector3 location = GetWorldPosition(x, z);
+                location.x += cellSize / 2;
+                location.z += cellSize / 2;
+                Instantiate(groundPrefab, location, Quaternion.identity);
             }
         }
 
-        bool showDebug = true;
+        stopwatch.Stop();
+        Debug.Log($"{this.xLength * this.zLength} cells loaded in {stopwatch.Elapsed} seconds.");
+
+        bool showDebug = false;
         if (showDebug)
         {
             for (int x = 0; x < gridArray.GetLength(0); x++)
