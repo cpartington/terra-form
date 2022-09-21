@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TerrainGrid
+public class TerrainGrid : MonoBehaviour
 {
-    private int xLength;
-    private int zLength;
+    public int xLength { get; }
+    public int zLength { get; }
     private int cellSize;
     private Vector3 originPosition;
 
