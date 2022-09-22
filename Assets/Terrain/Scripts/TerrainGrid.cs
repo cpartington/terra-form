@@ -66,8 +66,9 @@ public class TerrainGrid : MonoBehaviour
         var v = GetWorldPosition(x, z);
         if (isWater)
         {
-            float waterHeight = (TerrainComputer.Instance.WaterLevel - y) * Constants.GridCellHeight;
-            v.y = (y + Constants.TerrainHeightOffset) * Constants.GridCellHeight + (waterHeight / 2);
+            //float waterHeight = (TerrainComputer.Instance.WaterLevel - y) * Constants.GridCellHeight;
+            //v.y = (y + Constants.TerrainHeightOffset) * Constants.GridCellHeight + (waterHeight / 2);
+            v.y = (y + 2 * Constants.TerrainHeightOffset + TerrainComputer.Instance.WaterLevel) * Constants.GridCellHeight / 2;
         }
         else
         {
