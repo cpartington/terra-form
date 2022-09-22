@@ -8,7 +8,7 @@ public static class GridConstants
     public const int GridXLength = 100;
     public const int GridZLength = 100;
     public const int GridCellSize = 1;
-    public const float GridNoiseScale = 0.05f;
+    public const float GridNoiseScale = 0.03f;
 }
 
 public enum TerrainType

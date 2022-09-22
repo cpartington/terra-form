@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 public class TerrainComputer
 {
-    private const int TerrainLevels = 10;
-    private static readonly int[] TerrainTypeWeights = { 10, 15, 30, 30, 20 };
+    private const int TerrainLevels = 15;
+    private static readonly int[] TerrainTypeWeights = { 10, 15, 10, 40, 20 };
 
     public static TerrainComputer Instance { 
         get
