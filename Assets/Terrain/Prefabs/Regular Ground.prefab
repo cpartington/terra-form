@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7288883915421138169}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.11, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -115,3 +115,5 @@ MonoBehaviour:
   lowGround: {fileID: 2100000, guid: bebf47f2dbc488540aeafa5e550fa9f8, type: 2}
   midGround: {fileID: 2100000, guid: 9c429f7a45d72e14a949da131cab6765, type: 2}
   highGround: {fileID: 2100000, guid: 3cf9608e751800d44af2826111d5d2ef, type: 2}
+  waterPrefab: {fileID: 7288883915421138169, guid: 42c9e249483028545ae676cd439f8962,
+    type: 3}

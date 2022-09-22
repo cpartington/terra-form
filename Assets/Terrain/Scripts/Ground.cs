@@ -9,7 +9,8 @@ public class Ground : MonoBehaviour
     public Material lowGround;
     public Material midGround;
     public Material highGround;
-    
+    public GameObject waterPrefab;
+
     private MeshRenderer meshRenderer;
     private TerrainCell cell;
 
@@ -26,9 +27,11 @@ public class Ground : MonoBehaviour
         {
             case TerrainType.DeepWater:
                 meshRenderer.material = deepWater;
+                AddWater();
                 break;
             case TerrainType.ShallowWater:
                 meshRenderer.material = shallowWater;
+                AddWater();
                 break;
             case TerrainType.LowGround:
                 meshRenderer.material = lowGround;
@@ -43,5 +46,17 @@ public class Ground : MonoBehaviour
                 Debug.Log("You messed up");
                 break;
         }
+    }
+
+    private void AddWater()
+    {
+        // Create prefab
+        float waterHeight = (TerrainComputer.Instance.WaterLevel - cell.y) * Constants.GridCellHeight;
+        Vector3 location = TerrainGrid.Instance.GetWorldPosition(cell.x, cell.z);
+        location.x += Constants.GridCellSize / 2;
+        location.z += Constants.GridCellSize / 2;
+        location.y += (cell.y + 1) * Constants.GridCellHeight + (waterHeight / 2);
+        var waterCell = Instantiate(waterPrefab, location, Quaternion.identity);
+        waterCell.transform.localScale = new Vector3(1, waterHeight, 1);
     }
 }

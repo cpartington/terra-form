@@ -5,8 +5,8 @@ using System.Linq;
 
 public class TerrainComputer
 {
-    private int TerrainLevels = GridConstants.TerrainLevels;
-    private int[] TerrainTypeWeights = GridConstants.TerrainTypeWeights;
+    private int TerrainLevels = Constants.TerrainLevels;
+    private int[] TerrainTypeWeights = Constants.TerrainTypeWeights;
 
     public static TerrainComputer Instance { 
         get
@@ -22,6 +22,7 @@ public class TerrainComputer
 
     public float[] TerrainTypePercentiles { get; private set; }
     public float[] TerrainLevelPercentiles { get; private set; }
+    public int WaterLevel { get; private set; }
 
     public Dictionary<int, TerrainType> LevelToTerrainType { get; private set; }
 
@@ -66,6 +67,7 @@ public class TerrainComputer
         { return (weight + TerrainTypeWeights.Take(index).Sum()) / terrainTypeWeightTotal; }).ToArray();
 
         this.LevelToTerrainType = new Dictionary<int, TerrainType>();
+        TerrainType lastType = TerrainType.DeepWater;
         for (int level = 0; level < TerrainLevels; level++)
         {
             float percentile = level / ((float)TerrainLevels - 1);
@@ -73,12 +75,20 @@ public class TerrainComputer
             {
                 if (percentile <= TerrainTypePercentiles[type])
                 {
-                    this.LevelToTerrainType.Add(level, (TerrainType)type);
+                    TerrainType terrainType = (TerrainType)type;
+                    this.LevelToTerrainType.Add(level, terrainType);
+                    
+                    if (lastType == TerrainType.ShallowWater && terrainType == TerrainType.LowGround)
+                    {
+                        WaterLevel = level;
+                    }
+                    lastType = terrainType;
+                    
                     break;
                 }
             }
         }
 
-        UnityEngine.Debug.Log(LevelToTerrainType);
+        UnityEngine.Debug.Log(WaterLevel + ", " + LevelToTerrainType);
     }
 }

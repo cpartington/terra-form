@@ -26,9 +26,9 @@ public class TerrainGrid : MonoBehaviour
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        this.xLength = GridConstants.GridXLength;
-        this.zLength = GridConstants.GridZLength;
-        this.cellSize = GridConstants.GridCellSize;
+        this.xLength = Constants.GridXLength;
+        this.zLength = Constants.GridZLength;
+        this.cellSize = Constants.GridCellSize;
         this.originPosition = new Vector3(-(this.xLength / 2), 0, -(this.zLength / 2));
 
         this.gridArray = new TerrainCell[xLength, zLength];
@@ -38,7 +38,7 @@ public class TerrainGrid : MonoBehaviour
             for (int z = 0; z < gridArray.GetLength(1); z++)
             {
                 // Get height value
-                float noiseValue = Mathf.PerlinNoise(x * GridConstants.GridNoiseScale + xOffset, z * GridConstants.GridNoiseScale + yOffset);
+                float noiseValue = Mathf.PerlinNoise(x * Constants.GridNoiseScale + xOffset, z * Constants.GridNoiseScale + yOffset);
 
                 // Create cell
                 gridArray[x, z] = new TerrainCell(x, z, noiseValue);

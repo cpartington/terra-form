@@ -3,11 +3,12 @@
 /// <summary>
 /// Constants for terrain grid
 /// </summary>
-public static class GridConstants
+public static class Constants
 {
     public const int GridXLength = 150;
     public const int GridZLength = 150;
     public const int GridCellSize = 1;
+    public const float GridCellHeight = 0.5f;
     public const float GridNoiseScale = 0.03f;
 
     public const int TerrainLevels = 15;
