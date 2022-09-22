@@ -30,7 +30,6 @@ public class TerrainGrid : MonoBehaviour
         this.zLength = GridConstants.GridZLength;
         this.cellSize = GridConstants.GridCellSize;
         this.originPosition = new Vector3(-(this.xLength / 2), 0, -(this.zLength / 2));
-        Debug.Log(this.originPosition);
 
         this.gridArray = new TerrainCell[xLength, zLength];
         (float xOffset, float yOffset) = (Random.Range(-10000f, 10000f), Random.Range(-10000f, 10000f));

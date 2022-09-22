@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 public class TerrainComputer
@@ -21,11 +23,13 @@ public class TerrainComputer
     public float[] TerrainTypePercentiles { get; private set; }
     public float[] TerrainLevelPercentiles { get; private set; }
 
+    public Dictionary<int, TerrainType> LevelToTerrainType { get; private set; }
+
     private TerrainComputer()
     {
         float scale = (float)(TerrainLevels - 1) / (TerrainTypeWeights.Length - 1);
         float[] scaledIndices = new float[TerrainTypeWeights.Length];
-        for(int i = 0; i < TerrainTypeWeights.Length; i++)
+        for (int i = 0; i < TerrainTypeWeights.Length; i++)
         {
             scaledIndices[i] = i * scale;
         }
@@ -60,5 +64,21 @@ public class TerrainComputer
         float terrainTypeWeightTotal = TerrainTypeWeights.Sum();
         TerrainTypePercentiles = TerrainTypeWeights.Select((weight, index) =>
         { return (weight + TerrainTypeWeights.Take(index).Sum()) / terrainTypeWeightTotal; }).ToArray();
+
+        this.LevelToTerrainType = new Dictionary<int, TerrainType>();
+        for (int level = 0; level < TerrainLevels; level++)
+        {
+            float percentile = level / ((float)TerrainLevels - 1);
+            for (int type = 0; type < TerrainTypePercentiles.Length; type++)
+            {
+                if (percentile <= TerrainTypePercentiles[type])
+                {
+                    this.LevelToTerrainType.Add(level, (TerrainType)type);
+                    break;
+                }
+            }
+        }
+
+        UnityEngine.Debug.Log(LevelToTerrainType);
     }
 }
