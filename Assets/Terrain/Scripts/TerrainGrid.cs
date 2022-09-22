@@ -53,21 +53,14 @@ public class TerrainGrid : MonoBehaviour
         Debug.Log($"{this.xLength * this.zLength} cells loaded in {stopwatch.Elapsed} seconds.");
     }
 
-    public Vector3 GetWorldPosition(int x, int z)
+    public Vector3 GetWorldPosition(int x, int y, int z, bool isWater=false)
     {
         var v = new Vector3(x, 0, z) * Constants.GridCellSize + originPosition;
         v.x += Constants.GridCellSize / 2;
         v.z += Constants.GridCellSize / 2;
-        return v;
-    }
 
-    public Vector3 GetWorldPosition(int x, int y, int z, bool isWater=false)
-    {
-        var v = GetWorldPosition(x, z);
         if (isWater)
         {
-            //float waterHeight = (TerrainComputer.Instance.WaterLevel - y) * Constants.GridCellHeight;
-            //v.y = (y + Constants.TerrainHeightOffset) * Constants.GridCellHeight + (waterHeight / 2);
             v.y = (y + 2 * Constants.TerrainHeightOffset + TerrainComputer.Instance.WaterLevel) * Constants.GridCellHeight / 2;
         }
         else
