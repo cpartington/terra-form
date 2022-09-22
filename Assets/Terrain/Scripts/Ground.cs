@@ -21,8 +21,6 @@ public class Ground : MonoBehaviour
         this.cell = TerrainGrid.Instance.GetTerrainCell(transform.position);
         float[] Percentiles = TerrainComputer.Instance.TerrainTypePercentiles;
 
-        transform.localScale = new Vector3(1, cell.y + 1, 1);
-
         switch (cell.type)
         {
             case TerrainType.DeepWater:
@@ -51,12 +49,8 @@ public class Ground : MonoBehaviour
     private void AddWater()
     {
         // Create prefab
-        float waterHeight = (TerrainComputer.Instance.WaterLevel - cell.y) * Constants.GridCellHeight;
-        Vector3 location = TerrainGrid.Instance.GetWorldPosition(cell.x, cell.z);
-        location.x += Constants.GridCellSize / 2;
-        location.z += Constants.GridCellSize / 2;
-        location.y += (cell.y + 1) * Constants.GridCellHeight + (waterHeight / 2);
+        Vector3 location = TerrainGrid.Instance.GetWorldPosition(cell.x, cell.y, cell.z, isWater: true);
         var waterCell = Instantiate(waterPrefab, location, Quaternion.identity);
-        waterCell.transform.localScale = new Vector3(1, waterHeight, 1);
+        waterCell.transform.localScale = new Vector3(1, (TerrainComputer.Instance.WaterLevel - cell.y) * Constants.GridCellHeight, 1);
     }
 }
