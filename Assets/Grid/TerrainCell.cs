@@ -27,10 +27,9 @@ public class TerrainCell
 
         float[] typePercentiles = TerrainComputer.Instance.TerrainTypePercentiles;
         float percentile = this.y / (float)(TerrainComputer.Instance.TerrainLevelPercentiles.Length - 1);
-        Debug.Log(percentile + " --- " + typePercentiles.ToString());
         for (int i = 0; i < typePercentiles.Length; i++)
         {
-            if (percentile < typePercentiles[i])
+            if (percentile <= typePercentiles[i])
             {
                 this.type = (TerrainType)i;
                 break;
