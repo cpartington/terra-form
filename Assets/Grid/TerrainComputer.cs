@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 public class TerrainComputer
 {
-    private const int TerrainLevels = 15;
-    private static readonly int[] TerrainTypeWeights = { 10, 15, 10, 40, 20 };
+    private int TerrainLevels = GridConstants.TerrainLevels;
+    private int[] TerrainTypeWeights = GridConstants.TerrainTypeWeights;
 
     public static TerrainComputer Instance { 
         get
