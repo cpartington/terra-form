@@ -56,7 +56,7 @@ public class TerrainGrid : MonoBehaviour
 
         if (isWater)
         {
-            v.y = (y + 2 * Constants.TerrainHeightOffset + TerrainComputer.Instance.WaterLevel) * Constants.GridCellHeight / 2;
+            v.y = (y - Constants.WaterHeightOffset + 2 * Constants.TerrainHeightOffset + TerrainComputer.Instance.WaterLevel) * Constants.GridCellHeight / 2;
         }
         else
         {
