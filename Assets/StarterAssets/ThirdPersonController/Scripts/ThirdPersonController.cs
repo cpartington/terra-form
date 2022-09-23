@@ -16,10 +16,10 @@ namespace StarterAssets
     {
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
-        public float MoveSpeed = 2.0f;
+        public float MoveSpeed = 5.0f;
 
         [Tooltip("Sprint speed of the character in m/s")]
-        public float SprintSpeed = 5.335f;
+        public float SprintSpeed = 10.0f;
 
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
@@ -58,6 +58,13 @@ namespace StarterAssets
 
         [Tooltip("What layers the character uses as ground")]
         public LayerMask GroundLayers;
+
+        [Header("Player Step Climb")]
+        public GameObject stepRayUpper;
+        public GameObject stepRayLower;
+        public float stepHeight = Constants.GridCellHeight;
+        public float stepSmooth = 0.1f;
+
 
         [Header("Cinemachine")]
         [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
@@ -130,6 +137,8 @@ namespace StarterAssets
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+
+            stepRayUpper.transform.position = new Vector3(stepRayUpper.transform.position.x, stepRayLower.transform.position.y + stepHeight, stepRayUpper.transform.position.z);
         }
 
         private void Start()
@@ -159,6 +168,7 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            //StepClimb();
         }
 
         private void LateUpdate()
@@ -270,6 +280,8 @@ namespace StarterAssets
             // move the player
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+
+            StepClimb();
 
             // update animator if using character
             if (_hasAnimator)
@@ -386,6 +398,21 @@ namespace StarterAssets
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+            }
+        }
+
+        private void StepClimb()
+        {
+            RaycastHit hitLower;
+            if (Physics.Raycast(stepRayLower.transform.position, transform.TransformDirection(Vector3.forward), out hitLower, 0.1f))
+            {
+                RaycastHit hitUpper;
+                if (!Physics.Raycast(stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, 0.1f))
+                {
+                    //_controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
+                             //new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+                    _controller.Move(new Vector3(0, 1, 0) * (4 * Time.deltaTime));
+                }
             }
         }
     }
