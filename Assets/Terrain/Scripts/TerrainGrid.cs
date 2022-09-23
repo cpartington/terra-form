@@ -31,7 +31,7 @@ public class TerrainGrid : MonoBehaviour
             for (int z = 0; z < gridArray.GetLength(1); z++)
             {
                 // Get height value
-                float noiseValue = Mathf.PerlinNoise(x * Constants.GridNoiseScale + xOffset, z * Constants.GridNoiseScale + yOffset);
+                float noiseValue = Mathf.Abs(Mathf.PerlinNoise(x * Constants.GridNoiseScale + xOffset, z * Constants.GridNoiseScale + yOffset) * 2 - 1);
 
                 // Create cell
                 var cell = new TerrainCell(x, z, noiseValue);
